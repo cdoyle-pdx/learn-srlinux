@@ -8,9 +8,9 @@ comments: true
 
 Once you feel reasonably comfortable navigating the [CLI](https://learn.srlinux.dev/get-started/cli/), you'll likely want to start connecting you lab nodes together. You know... Networking! Let's start by looking at how our lab nodes are connected to each other. There are a few ways to do this...
 
-## Basic Interface Configuration
-
 ## Viewing/Verifying ContainerLab Links
+
+We need to start by identifying how each node in our lab is interconnected.
 
 **Logical Diagram**
 
@@ -57,6 +57,20 @@ Once the topology graph is *Serving*, you can view it using by opening a browser
 ![image](https://github.com/cdoyle-pdx/learn-srlinux/blob/main/docs/images/learn-srlinux_graph.png)
 
 *NOTE: This process assumes that your browser supports navigation to an insecure (HTTP) site and/or appropriate permissions and/or filters. Use of a VPN, firewall, or other external considerations may impact your ability to view this graph.*
+
+## Configure Layer-3
+
+/// admonition | A word on VRF's
+    type: subtle-note
+If you have experience on other platforms, you are likely used some form of _default_ VRF. This _default_ VRF typically possesses two common traits:
+
+* The _default_ VRF contains all front-panel "revenue" interfaces
+* The _default_ VRF is abstracted and does not require explicit configuration
+
+The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance" in SR Linux) for the management interface, but nothing more. If you plan to use revenue interfaces to connect nodes together, the first step is the creation of a new VRF.
+///
+
+**VRF's**
 
 ## LOWEST EDIT
 
