@@ -52,7 +52,7 @@ INFO[0000] Serving topology graph on http://0.0.0.0:50080
 
 Once the topology graph is *Serving*, you can view it using by opening a browser and replacing the "0.0.0.0" in the provided URL with the IP address (or loopback if viewing locally) and specified port number (50080 in our example).
 
--{{ image(url='docs/images/learn-srlinux_graph.png' }}-
+![image](https://github.com/cdoyle-pdx/learn-srlinux/blob/main/docs/images/learn-srlinux_graph.png)
 
 *NOTE: This process assumes that your browser supports navigation to an insecure (HTTP) site and/or appropriate permissions and/or filters. Use of a VPN, firewall, or other external considerations may impact your ability to view this graph.*
 
