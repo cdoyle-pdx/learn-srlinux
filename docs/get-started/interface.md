@@ -8,6 +8,8 @@ comments: true
 
 Once you feel reasonably comfortable navigating the [CLI](https://learn.srlinux.dev/get-started/cli/), you'll likely want to start connecting you lab nodes together. You know... Networking! Let's start by looking at how our lab nodes are connected to each other. There are a few ways to do this...
 
+## Basic Interface Configuration
+
 ## Viewing/Verifying ContainerLab Links
 
 **Logical Diagram**
@@ -56,7 +58,7 @@ Once the topology graph is *Serving*, you can view it using by opening a browser
 
 *NOTE: This process assumes that your browser supports navigation to an insecure (HTTP) site and/or appropriate permissions and/or filters. Use of a VPN, firewall, or other external considerations may impact your ability to view this graph.*
 
-## RESUME HERE
+## LOWEST EDIT
 
 /// admonition | Highly customizable CLI
     type: subtle-note
