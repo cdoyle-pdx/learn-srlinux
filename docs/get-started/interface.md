@@ -74,10 +74,9 @@ The concept of an abstracted, _default_ VRF does not exist in SR Linux. The fact
 
 ## LOWEST EDIT
 
-/// admonition | Highly customizable CLI
-    type: subtle-note
-SR Linux CLI is highly customizable, you can change the prompt, add new commands, create aliases, etc. If you miss a feature - join our [Discord community](https://go.srlinux.dev/discord) and let us know!
-///
+
+
+
 
 ## Prompt
 
