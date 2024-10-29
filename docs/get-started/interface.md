@@ -67,7 +67,7 @@ If you have experience on other platforms, you are likely used some form of _def
 * The _default_ VRF contains all front-panel "revenue" interfaces
 * The _default_ VRF is abstracted and does not require explicit configuration
 
-The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance") for the management interface, but nothing more. If you plan to use revenue interfaces to connect nodes together, the first step is the creation of a new VRF that your connected interfaces can be added to.
+The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance") for the management interface, but nothing more. Connecting revenue interfaces together between nodes requires the creation of a new VRF that your connected interfaces can be added to.
 ///
 
 **VRF's**
