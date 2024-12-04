@@ -236,31 +236,28 @@ A:spine1#
     type: subtle-note
 You might have noticed a bit of non-standard syntax in the spine1 configuration above. Rather than set ethernet-1/1.0 and ethernet-1/2.0 discretely, I set a range using a combination of curly braces and a comma. SR Linux supports defining a range **{_n_}** and/or using wildcards **(*)** to optimize configuration and show/info output. These tools can even be combined and stacked within the same command!
 
-/// tab | `Curly braces and a pair of periods for a range`
+`Curly braces and a pair of periods for a range`
 ```
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1..7}.0
 ```
 _This range command will include ethernet-1/1.0 through ethernet-1/7.0_
 
-///
-/// tab | `Curly braces and commas for specific values`
+`Curly braces and commas for specific values`
 ```
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1,2,3,5,7}.0
 ```
 _This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
 
-///
-/// tab | `Combine elements to optimize your command`
+`Combine elements to optimize your command`
 ```
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1..3,5,7}.0
 ```
 _This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
 
-///
-/// tab | `Use wildcards just about anywhere!`
+`Use wildcards just about anywhere!`
 ```
 --{ + running }--[  ]--
 A:spine1# info interface *
@@ -273,7 +270,6 @@ A:leaf1# info from state network-instance default route-table ipv4-unicast route
 ```
 _This will display the active status for all IPv4 unicast BGP routes in the default network instance route table_
 
-///
 ///
 
 ## LOWEST EDIT ##
