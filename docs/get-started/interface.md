@@ -167,6 +167,7 @@ A:leaf1#
 Let's say I want to configure an IP address on leaf2 for ethernet-1/49 _and_ set the admin-state for the ipv6 address family to `enable`:
 
 _leaf2_
+```
 root
   |
   -- interface
@@ -184,7 +185,7 @@ root
                                 -- ipv6
                                     |
                                     -- admin-state 'enable'
-
+```
 We can see that the _subinterface `0`_ branch is common to the ipv4 and ipv6 elements we need to configure. 
 
 Configuring leaf2 using the "move and set" method looks like this:
