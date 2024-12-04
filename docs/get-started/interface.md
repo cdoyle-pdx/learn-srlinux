@@ -236,13 +236,13 @@ A:spine1#
 <summary>Ranges and Wildcards (Optional, but very handy...)</summary>
 
 <p>You might have noticed a bit of non-standard syntax in the spine1 configuration above. Rather than set ethernet-1/1.0 and ethernet-1/2.0 discretely, a range was defined using a combination of curly braces and a comma. SR Linux supports defining a range and/or using wildcards to optimize configuration and show/info output. These tools can even be combined and stacked within the same command!</p>
-<br>
 <b>Curly braces and a pair of periods for a range</b>
 ```
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1..7}.0
 ```
 _This range command will include ethernet-1/1.0 through ethernet-1/7.0_
+<br>
 <br>
 <b>Curly braces and commas for specific values</b>
 ```
@@ -251,12 +251,14 @@ A:spine1# set interface ethernet-1/{1,2,3,5,7}.0
 ```
 _This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
 <br>
+<br>
 <b>Combine elements to optimize your command</b>
 ```
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1..3,5,7}.0
 ```
 _This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
+<br>
 <br>
 <b>Use wildcards just about anywhere!</b>
 ```
