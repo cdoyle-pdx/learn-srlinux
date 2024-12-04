@@ -4,6 +4,10 @@ comments: true
 
 # Network Instances (VRF's)
 
+## Overview
+
+## Configuring Lab Nodes
+
 Our first task is to define a "default" VRF for our revenue interfaces. We can name this VRF anything, but "default" feels intuitive, doesn't it?
 
 /// tab | `create 'default' VRF`
