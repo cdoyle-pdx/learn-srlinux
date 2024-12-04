@@ -85,7 +85,8 @@ leaf2:lo0 (172.31.0.2/32)
 spine1:lo0 (172.31.0.11/32)
 ```
 
-Verify interface layer-1/2 state:
+**Verify interface layer-1/2 state:**
+
 _Example on leaf1 - repeat as-desired on other lab nodes_
 
 ```srl
@@ -115,7 +116,8 @@ Summary
 =====================================================================================================================================
 ```
 
-Configure leaf1 interfaces using set commands from config root:
+**One way to do it: Configure leaf1 interfaces using set commands from config root:**
+
 _Don't forget to enter candidate mode!_
 
 ```srl
@@ -136,7 +138,8 @@ All changes have been committed. Leaving candidate mode.
 A:leaf1#
 ```
 
-Configure leaf2 intefaces from interface heirarchy:
+**Another way to do it: Configure leaf2 intefaces from interface heirarchy:**
+
 ```srl
 --{ * candidate shared default }--[  ]--
 A:leaf2# interface ethernet-1/49 subinterface 0 ipv4
@@ -167,9 +170,9 @@ All changes have been committed. Leaving candidate mode.
 A:leaf2#
 ```
 
-Configure spine1 however you like!
+**Configure spine1 using either method shown above!**
 
-**Network-Instances (VRF's)**
+### Network-Instances (VRF's)
 
 Our first task is to define a "default" VRF for our revenue interfaces. We can name this VRF anything, but "default" feels intuitive, doesn't it?
 
@@ -195,12 +198,90 @@ A:leaf1#
 ```
 
 ///
-/// tab | `add lab revenue interfaces`
+/// tab | `add interfaces (leaf1 and leaf2)`
 
 ```srl
-PASTE CONTENT
+--{ +* candidate shared default }--[ network-instance default ]--
+A:leaf1# set interface ethernet-1/49.0
+
+--{ +* candidate shared default }--[ network-instance default ]--
+A:leaf1# set interface lo0.0
+
+--{ +* candidate shared default }--[ network-instance default ]--
+A:leaf1#
+
+--{ +* candidate shared default }--[ network-instance default ]--
+A:leaf1# /
+
+--{ +* candidate shared default }--[  ]--
+A:leaf1# commit now
+All changes have been committed. Leaving candidate mode.
+
+--{ + running }--[  ]--
+A:leaf1#
 ```
 
+///
+/// tab | `add interfaces (spine1)`
+
+```srl
+--{ +* candidate shared default }--[ network-instance default ]--
+A:spine1# set interface ethernet-1/{1,2}.0
+
+--{ +* candidate shared default }--[ network-instance default ]--
+A:spine1# /
+
+--{ +* candidate shared default }--[  ]--
+A:spine1# commit now
+All changes have been committed. Leaving candidate mode.
+
+--{ + running }--[  ]--
+A:spine1#
+```
+///
+
+/// admonition | Ranges and Wildcards
+    type: subtle-note
+You might have noticed a bit of non-standard syntax in the spine1 configuration above. Rather than set ethernet-1/1.0 and ethernet-1/2.0 discretely, I set a range using a combination of curly braces and a comma. SR Linux supports defining a range **{_n_}** and/or using wildcards **(*)** to optimize configuration and show/info output. These tools can even be combined and stacked within the same command!
+
+/// tab | `Curly braces and a pair of periods for a range`
+```
+--{ +* candidate shared default }--[ network-instance default ]--
+A:spine1# set interface ethernet-1/{1..7}.0
+```
+_This range command will include ethernet-1/1.0 through ethernet-1/7.0_
+
+///
+/// tab | `Curly braces and commas for specific values`
+```
+--{ +* candidate shared default }--[ network-instance default ]--
+A:spine1# set interface ethernet-1/{1,2,3,5,7}.0
+```
+_This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
+
+///
+/// tab | `Combine elements to optimize your command`
+```
+--{ +* candidate shared default }--[ network-instance default ]--
+A:spine1# set interface ethernet-1/{1..3,5,7}.0
+```
+_This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
+
+///
+/// tab | `Use wildcards just about anywhere!`
+```
+--{ + running }--[  ]--
+A:spine1# info interface *
+```
+_This will show the all configured interfaces_
+
+```
+--{ + running }--[  ]--
+A:leaf1# info from state network-instance default route-table ipv4-unicast route * id * route-type bgp route-owner * origin-network-instance * active
+```
+_This will display the active status for all IPv4 unicast BGP routes in the default network instance route table_
+
+///
 ///
 
 ## LOWEST EDIT ##
