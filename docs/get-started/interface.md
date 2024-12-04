@@ -241,7 +241,7 @@ A:spine1#
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1..7}.0
 ```
-_This range command will include ethernet-1/1.0 through ethernet-1/7.0_
+<i>This range command will include ethernet-1/1.0 through ethernet-1/7.0</i>
 <br>
 <br>
 <b>Curly braces and commas for specific values</b>
@@ -249,7 +249,7 @@ _This range command will include ethernet-1/1.0 through ethernet-1/7.0_
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1,2,3,5,7}.0
 ```
-_This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
+<i>This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0</i>
 <br>
 <br>
 <b>Combine elements to optimize your command</b>
@@ -257,7 +257,7 @@ _This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0,
 --{ +* candidate shared default }--[ network-instance default ]--
 A:spine1# set interface ethernet-1/{1..3,5,7}.0
 ```
-_This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0_
+<i>This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0, ethernet-1/5.0, and ethernet-1/7.0</i>
 <br>
 <br>
 <b>Use wildcards just about anywhere!</b>
@@ -265,13 +265,13 @@ _This range command will include ethernet-1/1.0, ethernet-1/2.0, ethernet-1/3.0,
 --{ + running }--[  ]--
 A:spine1# info interface *
 ```
-_This will show the all configured interfaces_
+<i>This will show the all configured interfaces</i>
 
 ```
 --{ + running }--[  ]--
 A:leaf1# info from state network-instance default route-table ipv4-unicast route * id * route-type bgp route-owner * origin-network-instance * active
 ```
-_This will display the active status for all IPv4 unicast BGP routes in the default network instance route table_
+<i>This will display the active status for all IPv4 unicast BGP routes in the default network instance route table</i>
 </details>
 
 ## LOWEST EDIT ##
