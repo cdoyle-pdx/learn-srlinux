@@ -12,13 +12,13 @@ Once you feel reasonably comfortable navigating the [CLI](https://learn.srlinux.
 
 We need to start by identifying how each node in our lab is interconnected.
 
-**Logical Diagram**
+### Logical Diagram
 
 This is the drawio diagram included with the srlinux-getting-started ContainerLab files. It shows a high-level relationship between deployed nodes, but not the interfaces...
 
 -{{ diagram(url='srl-labs/srlinux-getting-started/main/diagrams/topology.drawio', title='Lab Topology', page=0) }}-
 
-**Phyiscal Links**
+### Phyiscal Links
 
 Links between virtual nodes in ContainerLabs are defined within the lab's YAML configuration file. For the srlinux-getting-started lab, the file is named lab.clab.yml.
 
@@ -38,7 +38,7 @@ topology:
     - endpoints: ["client2:eth1", "leaf2:e1-1"]
 ```
 
-**Generate a Graph**
+### Generate a Graph
 
 ContainerLabs provides a built-in tool for generating a topology diagram, complete with links, that can be viewed with a web browser. Simply run the "clab graph" command to spawn a local web server showing the lab graph.
 
@@ -65,7 +65,7 @@ If you have experience on other platforms, you are likely used some form of _def
 * The _default_ VRF contains all front-panel "revenue" interfaces
 * The _default_ VRF is abstracted and does not require explicit configuration
 
-The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance") for the management interface, but nothing more. Connecting revenue interfaces together between nodes requires the creation of a new VRF that your connected interfaces can be added to.
+The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance") for the management interface, but nothing more. Connecting revenue interfaces together between nodes requires the creation of a new VRF that your connected interfaces can be added to. Network instances are covered in the next section of this guide.
 ///
 
 ## Routed Interface Configuration
@@ -83,7 +83,9 @@ leaf2:lo0 (172.31.0.2/32)
 spine1:lo0 (172.31.0.11/32)
 ```
 
-**Verify interface layer-1/2 state:**
+### Verify interface layer-1/2 state
+
+Use the `show interface` command to view active interfaces. Note the difference in output between the configured _mgmt0_ interface, and the unconfigured _ethernet-1/1 and -1/49_ interfaces. We know from our diagram that _ethernet-1/49_ connects to spine1 and we can see that it is in an _up_ state. We'll be disregarding _ethernet-1/1_ for now as it connects to a client that is out-of-scope of this guide.
 
 _Example on leaf1 - repeat as-desired on other lab nodes_
 
@@ -91,7 +93,7 @@ _Example on leaf1 - repeat as-desired on other lab nodes_
 --{ running }--[  ]--
 A:leaf1# show interface
 =====================================================================================================================================
-ethernet-1/1 is up, speed 25G, type None  <---NOTE: eth-1/1 leaf connections are to client nodes and out-of-scope of this exercise
+ethernet-1/1 is up, speed 25G, type None
 -------------------------------------------------------------------------------------------------------------------------------------
 ethernet-1/49 is up, speed 100G, type None
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -114,7 +116,30 @@ Summary
 =====================================================================================================================================
 ```
 
-**One way to do it: Configure leaf1 interfaces using set commands from config root:**
+### Configure IPv4 on the interfaces interconnecting leaf1, leaf2, and spine1
+
+When configuring SR Linux, you can either "set from root" or "move and set", two terms I made up just now. 
+
+**"Set from root"** involves using a set command from the root of the hierarchy and iterating your configuration in a single string. This is useful if set elements are linear within the hierarchy.
+
+For example, to configure an IP address on leaf1 for ethernet-1/49, the set elements in the config hierarchy look like this:
+
+_leaf1_
+root
+  |
+  -- interface
+          |
+          -- ethernet-`1/49`
+                    |
+                    -- subinterface `0`
+                                |
+                                -- ipv4
+                                    |
+                                    -- admin-state `enable`
+                                    |
+                                    -- address `10.0.0.0/31`
+
+If we configure leaf1 using the "set from root" method, it looks like this:
 
 _Don't forget to enter candidate mode!_
 
@@ -136,19 +161,47 @@ All changes have been committed. Leaving candidate mode.
 A:leaf1#
 ```
 
-**Another way to do it: Configure leaf2 intefaces from interface heirarchy:**
+**"Move and set"** is useful if you have set elements that are within a section of the hierarchy and are non-linear. Instead of typing out a long set command from the root of the configuration multiple times, you navigate to the deepest branch of the hierarchy that is common to the configuration you are setting.
+
+Let's say I want to configure an IP address on leaf2 for ethernet-1/49 _and_ set the admin-state for the ipv6 address family to `enable`:
+
+_leaf2_
+root
+  |
+  -- interface
+          |
+          -- ethernet-`1/49`
+                    |
+                    -- subinterface `0`
+                                |
+                                -- ipv4
+                                    |
+                                    -- admin-state `enable`
+                                    |
+                                    -- address `10.0.0.2/31`
+                                |
+                                -- ipv6
+                                    |
+                                    -- admin-state 'enable'
+
+We can see that the _subinterface `0`_ branch is common to the ipv4 and ipv6 elements we need to configure. 
+
+Configuring leaf2 using the "move and set" method looks like this:
 
 ```srl
 --{ * candidate shared default }--[  ]--
-A:leaf2# interface ethernet-1/49 subinterface 0 ipv4
+A:leaf2# interface ethernet-1/49 subinterface 0
 
---{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ipv4 ]--
-A:leaf2# set admin-state enable
+--{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ]--
+A:leaf2# set ipv4 admin-state enable address 10.0.0.2/31
 
---{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ipv4 ]--
-A:leaf2# set address 10.0.0.2/31
+--{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ]--
+A:leaf2# set ipv6 admin-state enable
+```
+We still need to configure the loopback interface. We can jump directly there by using the `/interface/lo0` command:
 
---{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ipv4 ]--
+```srl
+--{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ]--
 A:leaf2# /
 
 --{ * candidate shared default }--[  ]--
@@ -168,4 +221,4 @@ All changes have been committed. Leaving candidate mode.
 A:leaf2#
 ```
 
-**Configure spine1 using either method shown above!**
+### Now configure spine1, _ethernet-1/1_ and _ethernet-1/2_ using either method!
