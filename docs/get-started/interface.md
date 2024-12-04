@@ -70,8 +70,138 @@ If you have experience on other platforms, you are likely used some form of _def
 The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance") for the management interface, but nothing more. Connecting revenue interfaces together between nodes requires the creation of a new VRF that your connected interfaces can be added to.
 ///
 
+**Interface Configuration**
+
+_Adding interface configurations first allows you to take advantage of context-aware autocomplete when configuring the VRF we will add them to. Not strictly required, but useful._
+
+Before we configure any layer-3, we need to decide on the address space we want to use. Our ultimate goal will be to use interface peering for loopback reachability, configure OSPF for loopback reachability, then configure eBGP between connected loopbacks. You can define your own nets for this step, or you can congfigure based on the allocations below:
+
+```srl
+leaf1:e1-49 (10.0.0.0/31) <-> (10.0.0.1/31) e1-1:spine1
+leaf2:e1-49 (10.0.0.2/31) <-> (10.0.0.3/31) e1-2:spine1
+
+leaf1:lo0 (172.31.0.1/32)
+leaf2:lo0 (172.31.0.2/32)
+spine1:lo0 (172.31.0.11/32)
+```
+
+Verify interface layer-1/2 state:
+_Example on leaf1 - repeat as-desired on other lab nodes_
+
+```srl
+--{ running }--[  ]--
+A:leaf1# show interface
+=====================================================================================================================================
+ethernet-1/1 is up, speed 25G, type None  <---NOTE: eth-1/1 leaf connections are to client nodes and out-of-scope of this exercise
+-------------------------------------------------------------------------------------------------------------------------------------
+ethernet-1/49 is up, speed 100G, type None
+-------------------------------------------------------------------------------------------------------------------------------------
+mgmt0 is up, speed 1G, type None
+  mgmt0.0 is up
+    Network-instances:
+      * Name: mgmt (ip-vrf)
+    Encapsulation   : null
+    Type            : None
+    IPv4 addr    : 172.20.20.4/24 (dhcp, preferred)
+    IPv6 addr    : 2001:172:20:20::4/64 (dhcp, preferred)
+    IPv6 addr    : fe80::42:acff:fe14:1404/64 (link-layer, preferred)
+-------------------------------------------------------------------------------------------------------------------------------------
+=====================================================================================================================================
+Summary
+  0 loopback interfaces configured
+  2 ethernet interfaces are up
+  1 management interfaces are up
+  1 subinterfaces are up
+=====================================================================================================================================
+```
+
+Configure leaf1 interfaces using set commands from config root:
+_Don't forget to enter candidate mode!_
+
+```srl
+--{ candidate shared default }--[  ]--
+A:leaf1# set interface ethernet-1/49 subinterface 0 ipv4 admin-state enable address 10.0.0.0/31
+
+--{ * candidate shared default }--[  ]--
+A:leaf1# set interface lo0 subinterface 0 ipv4 address 172.31.0.1/32
+
+--{ * candidate shared default }--[  ]--
+A:leaf1#
+
+--{ * candidate shared default }--[  ]--
+A:leaf1# commit now
+All changes have been committed. Leaving candidate mode.
+
+--{ + running }--[  ]--
+A:leaf1#
+```
+
+Configure leaf2 intefaces from interface heirarchy:
+```srl
+--{ * candidate shared default }--[  ]--
+A:leaf2# interface ethernet-1/49 subinterface 0 ipv4
+
+--{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ipv4 ]--
+A:leaf2# set admin-state enable
+
+--{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ipv4 ]--
+A:leaf2# set address 10.0.0.2/31
+
+--{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ipv4 ]--
+A:leaf2# /
+
+--{ * candidate shared default }--[  ]--
+A:leaf2# interface lo0 subinterface 0
+
+--{ * candidate shared default }--[ interface lo0 subinterface 0 ]--
+A:leaf2# set ipv4 address 172.31.0.2/32
+
+--{ * candidate shared default }--[ interface lo0 subinterface 0 ]--
+A:leaf2#
+
+--{ * candidate shared default }--[  ]--
+A:leaf2# commit now
+All changes have been committed. Leaving candidate mode.
+
+--{ + running }--[  ]--
+A:leaf2#
+```
+
+Configure spine1 however you like!
+
 **Network-Instances (VRF's)**
 
+Our first task is to define a "default" VRF for our revenue interfaces. We can name this VRF anything, but "default" feels intuitive, doesn't it?
+
+/// tab | `enter candidate mode`
+
+```srl
+--{ running }--[  ]--
+A:leaf1# enter candidate
+
+--{ candidate shared default }--[  ]--
+A:leaf1#
+```
+
+///
+/// tab | `create 'default' VRF`
+
+```srl
+--{ candidate shared default }--[  ]--
+A:leaf1# network-instance default
+
+--{ * candidate shared default }--[ network-instance default ]--
+A:leaf1#
+```
+
+///
+/// tab | `add lab revenue interfaces`
+
+```srl
+PASTE CONTENT
+```
+
+///
 
 ## LOWEST EDIT ##
 
