@@ -198,7 +198,7 @@ A:leaf1#
 ```
 
 ///
-/// tab | `add interfaces (leaf1 and leaf2)`
+/// tab | `add interfaces (leaf1 & 2)`
 
 ```srl
 --{ +* candidate shared default }--[ network-instance default ]--
