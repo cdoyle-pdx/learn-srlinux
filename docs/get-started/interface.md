@@ -238,6 +238,8 @@ A:spine1#
 
 You might have noticed a bit of non-standard syntax in the spine1 configuration above. Rather than set ethernet-1/1.0 and ethernet-1/2.0 discretely, a range was defined using a combination of curly braces and a comma. SR Linux supports defining a range and/or using wildcards to optimize configuration and show/info output. These tools can even be combined and stacked within the same command!
 
+
+
 ## Curly braces and a pair of periods for a range
 ```
 --{ +* candidate shared default }--[ network-instance default ]--
