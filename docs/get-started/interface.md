@@ -176,20 +176,12 @@ A:leaf2#
 
 Our first task is to define a "default" VRF for our revenue interfaces. We can name this VRF anything, but "default" feels intuitive, doesn't it?
 
-/// tab | `enter candidate mode`
+/// tab | `create 'default' VRF`
 
 ```srl
 --{ running }--[  ]--
 A:leaf1# enter candidate
 
---{ candidate shared default }--[  ]--
-A:leaf1#
-```
-
-///
-/// tab | `create 'default' VRF`
-
-```srl
 --{ candidate shared default }--[  ]--
 A:leaf1# network-instance default
 
