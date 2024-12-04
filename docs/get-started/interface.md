@@ -70,7 +70,7 @@ If you have experience on other platforms, you are likely used some form of _def
 The concept of an abstracted, _default_ VRF does not exist in SR Linux. The factory configuration includes a VRF ("network-instance") for the management interface, but nothing more. Connecting revenue interfaces together between nodes requires the creation of a new VRF that your connected interfaces can be added to.
 ///
 
-### Interface Configuration
+### **Interface Configuration**
 
 _Adding interface configurations first allows you to take advantage of context-aware autocomplete when configuring the VRF we will add them to. Not strictly required, but useful._
 
@@ -172,7 +172,7 @@ A:leaf2#
 
 **Configure spine1 using either method shown above!**
 
-### Network-Instances (VRF's)
+### Network Instances (VRF's)
 
 Our first task is to define a "default" VRF for our revenue interfaces. We can name this VRF anything, but "default" feels intuitive, doesn't it?
 
