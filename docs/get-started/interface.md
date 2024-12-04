@@ -124,21 +124,22 @@ When configuring SR Linux, you can either "set from root" or "move and set", two
 
 For example, to configure an IP address on leaf1 for ethernet-1/49, the set elements in the config hierarchy look like this:
 
-_leaf1_ <br>
-root <br>
-  | <br>
-  -- interface <br>
-          | <br>
-          -- ethernet-`1/49` <br>
-                    | <br>
-                    -- subinterface `0` <br>
-                                | <br>
-                                -- ipv4 <br>
-                                    | <br>
-                                    -- admin-state `enable` <br>
-                                    | <br>
-                                    -- address `10.0.0.0/31` <br>
-
+_leaf1_
+```
+root
+  |
+  -- interface
+          |
+          -- ethernet-`1/49`
+                    |
+                    -- subinterface `0`
+                                |
+                                -- ipv4
+                                    |
+                                    -- admin-state `enable`
+                                    |
+                                    -- address `10.0.0.0/31`
+```
 If we configure leaf1 using the "set from root" method, it looks like this:
 
 _Don't forget to enter candidate mode!_
