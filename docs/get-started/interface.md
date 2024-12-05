@@ -130,15 +130,15 @@ root
   |
   -- interface
           |
-          -- ethernet-<b>1/49</b>
+          -- ethernet-1/49
                     |
-                    -- subinterface <b>0</b>
+                    -- subinterface 0
                                 |
                                 -- ipv4
                                     |
-                                    -- admin-state <b>enable</b>
+                                    -- admin-state enable
                                     |
-                                    -- address <b>10.0.0.0/31</b>
+                                    -- address 10.0.0.0/31
 ```
 Configure leaf1 using the "set from root" method. Don't forget to configure _ethernet-1/49_ **and** _lo0_!
 
@@ -171,19 +171,19 @@ root
   |
   -- interface
           |
-          -- ethernet-<b>1/49</b>
+          -- ethernet-1/49
                     |
-                    -- subinterface <b>0</b>
+                    -- subinterface 0
                                 |
                                 -- ipv4
                                     |
-                                    -- admin-state <b>enable</b>
+                                    -- admin-state enable
                                     |
-                                    -- address <b>10.0.0.2/31</b>
+                                    -- address 10.0.0.2/31
                                 |
                                 -- ipv6
                                     |
-                                    -- admin-state <b>enable</b>
+                                    -- admin-state enable
 ```
 We can see that the _subinterface `0`_ branch is common to the ipv4 and ipv6 elements we need to configure. 
 
