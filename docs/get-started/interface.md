@@ -140,7 +140,7 @@ root
                                     |
                                     -- address 10.0.0.0/31
 ```
-Configure leaf1 using the "set from root" method. Don't forget to configure _ethernet-1/49_ **_and_** _lo0_!
+Configure leaf1 using the "set from root" method. Don't forget to configure ethernet-1/49 **_and_** lo0!
 
 _leaf1_
 ```srl
