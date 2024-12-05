@@ -140,7 +140,7 @@ root
                                     |
                                     -- address 10.0.0.0/31
 ```
-Configure leaf1 using the "set from root" method. Don't forget to configure _ethernet-1/49_ **and** _lo0_!
+Configure leaf1 using the "set from root" method. Don't forget to configure _ethernet-1/49_ **_and_** _lo0_!
 
 _leaf1_
 ```srl
@@ -163,7 +163,7 @@ A:leaf1#
 
 **"Move and set"** is useful if you have set elements that are within a section of the hierarchy and are non-linear. Instead of typing out a long set command from the root of the configuration multiple times, you navigate to the deepest branch of the hierarchy that is common to the configuration you are setting.
 
-Let's say I want to configure an IP address on leaf2 for ethernet-1/49 _and_ set the admin-state for the ipv6 address family to `enable`:
+Let's say I want to configure an IP address on leaf2 for ethernet-1/49 **_and_** set the admin-state for the ipv6 address family to `enable`:
 
 _leaf2_
 ```
