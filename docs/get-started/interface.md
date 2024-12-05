@@ -120,7 +120,7 @@ Summary
 
 When configuring SR Linux, you can either "set from root" or "move and set", two terms I made up just now. 
 
-**"Set from root"** involves using a set command from the root of the hierarchy and iterating your configuration in a single string. This is useful if set elements are linear within the hierarchy.
+**"Set from root"** involves using a set command from the root of the hierarchy and iterating your configuration in a single line. This is useful if set elements are linear within the hierarchy.
 
 For example, to configure an IP address on leaf1 for ethernet-1/49, the set elements in the config hierarchy look like this:
 
@@ -130,20 +130,19 @@ root
   |
   -- interface
           |
-          -- ethernet-`1/49`
+          -- ethernet-<b>1/49</b>
                     |
-                    -- subinterface `0`
+                    -- subinterface <b>0</b>
                                 |
                                 -- ipv4
                                     |
-                                    -- admin-state `enable`
+                                    -- admin-state <b>enable</b>
                                     |
-                                    -- address `10.0.0.0/31`
+                                    -- address <b>10.0.0.0/31</b>
 ```
-If we configure leaf1 using the "set from root" method, it looks like this:
+Configure leaf1 using the "set from root" method. Don't forget to configure _ethernet-1/49_ **and** _lo0_!
 
-_Don't forget to enter candidate mode!_
-
+_leaf1_
 ```srl
 --{ candidate shared default }--[  ]--
 A:leaf1# set interface ethernet-1/49 subinterface 0 ipv4 admin-state enable address 10.0.0.0/31
@@ -172,19 +171,19 @@ root
   |
   -- interface
           |
-          -- ethernet-`1/49`
+          -- ethernet-<b>1/49</b>
                     |
-                    -- subinterface `0`
+                    -- subinterface <b>0</b>
                                 |
                                 -- ipv4
                                     |
-                                    -- admin-state `enable`
+                                    -- admin-state <b>enable</b>
                                     |
-                                    -- address `10.0.0.2/31`
+                                    -- address <b>10.0.0.2/31</b>
                                 |
                                 -- ipv6
                                     |
-                                    -- admin-state 'enable'
+                                    -- admin-state <b>enable</b>
 ```
 We can see that the _subinterface `0`_ branch is common to the ipv4 and ipv6 elements we need to configure. 
 
@@ -200,20 +199,17 @@ A:leaf2# set ipv4 admin-state enable address 10.0.0.2/31
 --{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ]--
 A:leaf2# set ipv6 admin-state enable
 ```
-We still need to configure the loopback interface. We can jump directly there by using the `/interface/lo0` command:
+We still need to configure the loopback interface. We can jump directly there by using the `/interface lo0 subinterface 0` command:
 
 ```srl
 --{ * candidate shared default }--[ interface ethernet-1/49 subinterface 0 ]--
-A:leaf2# /
-
---{ * candidate shared default }--[  ]--
-A:leaf2# interface lo0 subinterface 0
+A:leaf2# /interface lo0 subinterface 0
 
 --{ * candidate shared default }--[ interface lo0 subinterface 0 ]--
 A:leaf2# set ipv4 address 172.31.0.2/32
 
 --{ * candidate shared default }--[ interface lo0 subinterface 0 ]--
-A:leaf2#
+A:leaf2#/
 
 --{ * candidate shared default }--[  ]--
 A:leaf2# commit now
