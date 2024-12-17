@@ -219,4 +219,4 @@ All changes have been committed. Leaving candidate mode.
 A:leaf2#
 ```
 
-### Now configure spine1, _ethernet-1/1_ and _ethernet-1/2_ using either method!
+**Now configure spine1, _ethernet-1/1_ and _ethernet-1/2_ using either method!**
