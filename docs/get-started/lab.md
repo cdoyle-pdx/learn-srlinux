@@ -4,7 +4,7 @@
 
 We wanted to make SR Linux the most accessible Network OS. With that in mind we made SR Linux container image available to everybody without any registration or licensing requirements :partying_face:
 
-The public SR Linux container image when powered by [containerlab][containerlab] allows users to build virtual labs with SR Linux in no time. All that to let you not only read about the features we offer, but to try them live!
+The public SR Linux container image, when powered by [containerlab][containerlab], allows users to build virtual labs with SR Linux in no time. All that to let you not only read about the features we offer, but to try them live!
 
 A single container image that hosts management, control and data plane functions is all you need to get started.
 
@@ -151,7 +151,7 @@ Alright, we are in, let's get familiar with the SR Linux CLI!
 
 :octicons-arrow-right-24: [Get to know SR Linux CLI](cli.md)
 
-/// admonition | Lab management cheatsheet
+/// details | Running SR Linux container without containerlab?
     type: code-example
 
 Here are some useful commands to manage your lab:
