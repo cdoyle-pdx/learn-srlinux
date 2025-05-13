@@ -162,12 +162,9 @@ A:leaf1#
 ```
 
 /// admonition | Remaining in Candidate Mode
-    type: note
+    type: info
 If you wish to remain in Candidate mode, use `commit stay`.
 ///
-
-!!! info inline end "Remaining in Canddidate Mode"
-    If you wish to remain in Candidate mode after the commit, use the `commit stay` command.
 
 **"Move and set"** is useful if you have set elements that are within a section of the hierarchy and are non-linear. Instead of typing out a long set command from the root of the configuration multiple times, you navigate to the deepest branch of the hierarchy that is common to the configuration you are setting.
 
