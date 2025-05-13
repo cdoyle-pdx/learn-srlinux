@@ -162,7 +162,7 @@ A:leaf1#
 ```
 
 /// admonition | Remaining in Candidate Mode
-    type: subtle-note
+    type: note
 If you wish to remain in Candidate mode, use `commit stay`.
 ///
 
