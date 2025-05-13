@@ -148,7 +148,7 @@ _leaf1_
 A:leaf1# set interface ethernet-1/49 subinterface 0 ipv4 admin-state enable address 10.0.0.0/31
 
 --{ * candidate shared default }--[  ]--
-A:leaf1# set interface lo0 subinterface 0 ipv4 address 172.31.0.1/32
+A:leaf1# set interface lo0 subinterface 0 ipv4 admin-state enable address 172.31.0.1/32
 
 --{ * candidate shared default }--[  ]--
 A:leaf1#
@@ -160,6 +160,11 @@ All changes have been committed. Leaving candidate mode.
 --{ + running }--[  ]--
 A:leaf1#
 ```
+
+/// admonition | Remaining in Candidate Mode
+    type: subtle-note
+If you wish to remain in Candidate mode, use `commit stay`.
+///
 
 **"Move and set"** is useful if you have set elements that are within a section of the hierarchy and are non-linear. Instead of typing out a long set command from the root of the configuration multiple times, you navigate to the deepest branch of the hierarchy that is common to the configuration you are setting.
 
