@@ -151,7 +151,7 @@ Alright, we are in, let's get familiar with the SR Linux CLI!
 
 :octicons-arrow-right-24: [Get to know SR Linux CLI](cli.md)
 
-/// details | Running SR Linux container without containerlab?
+/// details | Lab Management Cheatsheet
     type: code-example
 
 Here are some useful commands to manage your lab:
