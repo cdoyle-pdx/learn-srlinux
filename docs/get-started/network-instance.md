@@ -28,7 +28,7 @@ The SR Linux factory configuration has a management network-instance (type `ip-v
 
 ## Configuring Lab Nodes
 
-Our first task is to define a "default" VRF for our revenue interfaces. We can name this VRF anything, but "default" feels intuitive, doesn't it?
+Our first task is to define the "default" VRF for our revenue interfaces. This will be "default" in both name and `network-instance` type.
 
 /// tab | `create 'default' VRF`
 
