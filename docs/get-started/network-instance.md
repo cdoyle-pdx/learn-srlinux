@@ -5,6 +5,23 @@ comments: true
 # Network Instances (VRF's)
 
 ## Overview
+!!! info inline end "More Info"
+    This overview is an excerpt from SR Linux operational documentation found [here](https://documentation.nokia.com/srlinux/24-7/books/config-basics/network-instances.html#basic-network-instance-configuration)
+
+On the SR Linux device, you can configure one or more virtual routing instances, known as ‟network-instances”. Each network-instance has its own interfaces, its own protocol instances, its own route table, and its own FIB.
+
+When a packet arrives on a subinterface associated with a network-instance, it is forwarded according to the FIB of that network-instance. Transit packets are typically forwarded out another subinterface of the network-instance.
+
+SR Linux supports three types of network-instances: `default`, `ip-vrf`, and `mac-vrf`. Type `default` is the default network-instance (sometimes referred to as the "global" instance) and only one of this type is supported. Type `ip-vrf` is the regular (Layer-3) network-instance; you can create multiple network-instances of this type.
+
+Type `mac-vrf` functions as a broadcast domain and is associated with an `ip-vrf` network-instance via an Integrated Routing and Bridging (IRB) to support tunneling of Layer-2 traffic across an IP network. See the [mac-vrf network-instance](https://documentation.nokia.com/srlinux/24-7/books/config-basics/network-instances.html#mac-vrf-network-instance) for more information.
+
+The SR Linux factory configuration has a management network-instance (type `ip-vrf`) configured by default. The out-of-band mgmt0 interface is the only member of this management network-instance.
+
+**NOTE** Starting from the factory configuration, no in-band interfaces will pass traffic until the following conditions are met:
+* the interfaces are configured under the `interfaces` hierarchy
+* the interfaces are set to `admin-state enabled`
+* a `network-instance` is created and the configured interfaces are added as members
 
 ## Configuring Lab Nodes
 
