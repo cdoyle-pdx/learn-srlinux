@@ -6,7 +6,7 @@ comments: true
 
 ## Overview
 !!! info inline end "More Info"
-    This overview is an excerpt from SR Linux operational documentation found [here](https://documentation.nokia.com/srlinux/24-7/books/config-basics/network-instances.html#basic-network-instance-configuration)
+    This overview is an excerpt from SR Linux operational documentation found [here](https://documentation.nokia.com/srlinux/24-7/books/config-basics/network-instances.html#basic-network-instance-configuration).
 
 On the SR Linux device, you can configure one or more virtual routing instances, known as ‟network-instances”. Each network-instance has its own interfaces, its own protocol instances, its own route table, and its own FIB.
 
