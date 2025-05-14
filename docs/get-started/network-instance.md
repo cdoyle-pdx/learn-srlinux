@@ -2,6 +2,8 @@
 comments: true
 ---
 
+<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js" async></script>
+
 # Network Instances (VRF's)
 
 ## Overview
