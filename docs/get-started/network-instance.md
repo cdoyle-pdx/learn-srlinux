@@ -19,9 +19,9 @@ Type `mac-vrf` functions as a broadcast domain and is associated with an `ip-vrf
 The SR Linux factory configuration has a management network-instance (type `ip-vrf`) configured by default. The out-of-band mgmt0 interface is the only member of this management network-instance.
 
 __NOTE:__ Starting from the factory configuration, no in-band interfaces will pass traffic until the following conditions are met:
-- the interfaces are configured under the `interfaces` hierarchy
-- the interfaces are set to `admin-state enabled`
-- a `network-instance` is created and the configured interfaces are added as members
+* the interfaces are configured under the `interfaces` hierarchy
+* the interfaces are set to `admin-state enabled`
+* a `network-instance` is created and the configured interfaces are added as members
 
 ## Configuring Lab Nodes
 
