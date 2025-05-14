@@ -14,7 +14,7 @@ When a packet arrives on a subinterface associated with a network-instance, it i
 
 SR Linux supports three types of network-instances: `default`, `ip-vrf`, and `mac-vrf`. Type `default` is the default network-instance (sometimes referred to as the "global" instance) and only one of this type is supported. Type `ip-vrf` is the regular (Layer-3) network-instance; you can create multiple network-instances of this type.
 
-Type `mac-vrf` functions as a broadcast domain and is associated with an `ip-vrf` network-instance via an Integrated Routing and Bridging (IRB) to support tunneling of Layer-2 traffic across an IP network. See the [mac-vrf network-instance](https://documentation.nokia.com/srlinux/24-7/books/config-basics/network-instances.html#mac-vrf-network-instance) for more information.
+Type `mac-vrf` functions as a broadcast domain and is associated with an `ip-vrf` network-instance via an Integrated Routing and Bridging (IRB) to support tunneling of Layer-2 traffic across an IP network. See the [mac-vrf network-instance](https://documentation.nokia.com/srlinux/24-7/books/config-basics/network-instances.html#mac-vrf-network-instance) documentation for more information.
 
 The SR Linux factory configuration has a management network-instance (type `ip-vrf`) configured by default. The out-of-band mgmt0 interface is the only member of this management network-instance.
 
